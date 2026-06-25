@@ -1,0 +1,10 @@
+- Python (3.12)
+- Git. Github
+- Uv     https://docs.astral.sh/uv/getting-started/installation/
+
+- Entornos virtuales -- venv
+.\.venv\Scripts\activate
+
+- LLM
+https://cohere.com/
+https://cohere.com/llmu  solo modulo 1
