@@ -1,7 +1,12 @@
 import cohere
+## bloque variables de entorno
+from dotenv import load_dotenv
+import os
 
+load_dotenv()  # Load .env file
 
-api_key = "your api key here"
+api_key = os.getenv("COHERE_API_KEY")
+
 
 co = cohere.ClientV2(api_key=api_key)
 response = co.chat(

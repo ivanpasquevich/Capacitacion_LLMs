@@ -1,0 +1,117 @@
+Hacer un archivo .py por cada ejercicio
+
+-----------------------------
+
+EJERCICIO 1
+
+Extraccion de entidades
+
+Utilizar el LLM para extraer las siguientes entidades del texto medico.
+
+- Paciente:
+    - Nombre
+    - Edad
+- Fecha de admisión
+- Síntomas
+- Diagnóstico
+- Tratamiento recomendado
+
+**Aclaracion:** 
+
+La salida tiene que ser un **string con formato de tipo json**, el cual se convertira en un diccionario de Python.
+
+Si la linea de conversion en test da error el ejercicio no esta completo.
+
+
+
+# ejemplo 
+
+# texto a analizar
+"""La paciente, María González, de 45 años, fue admitida en el Hospital Central el 5 de agosto de 2023 debido a síntomas de fatiga crónica y dolores musculares./
+Tras una serie de análisis, se diagnosticó fibromialgia. La doctora a cargo, Laura Ramírez, recomendó un tratamiento basado en fisioterapia y medicamentos analgésicos. /
+La próxima consulta está programada para el 15 de septiembre."""
+
+
+# respuesta del LLM esperada
+{
+  "paciente": {
+    "nombre": "María González",
+    "edad": 45
+  },
+  "fecha_admision": "2023-08-05",
+  "sintomas": [
+    "fatiga crónica",
+    "dolores musculares"
+  ],
+  "diagnostico": "fibromialgia",
+  "tratamiento": [
+    "fisioterapia",
+    "medicamentos analgésicos"
+  ]
+}
+
+
+# test de verificacion de respuesta, ejecutarlo y no debe dar error
+
+final_result = json.loads(llm_response)
+
+
+
+
+-------------------
+
+EJERCICIO 2
+
+
+Crear una funcion llamada "history_answer", que toma como parametro de entrada una pregunta sobre un contexto dado y la salida es la respuesta final del proceso impulsado por un LLM.
+
+Dada una historia, el usuario podra hacer preguntas sobre la misma y el LLM debe responder siguiendo los siguientes lineamientos:
+
+REQUISITOS DE LA RESPUESTA
+- las respuestas deben ser en base a la historia
+- ante la misma pregunta siempre debe responder de la misma manera. -- parametros del modelo
+- que responda en solo una oracion.
+- el idioma que responde debe ser el mismo que con el que se pregunta (ingles, espanol, portugues).
+- que agregue emojis en la oracion que resuman el contenido de la misma.
+- que responda siempre en tercera persona.
+- si la pregunta no tiene relacion alguna con el contexto, la respuesta debe ser 'Lo siento no puedo ayudarte con eso'.
+- Responder con 'Hakuna Matata!' al final de **todas** las respuestas (no importa idioma ni cantidad de tokens).
+
+**Ayudin**: 
+- No se limiten a usar 1 solo request al LLM, pueden dividirlo en partes para que por un lado se verifique el idioma, por otro lado se verifique si la pregunta tiene relacion con el contexto, etc
+
+- Estructuren bien el prompt procurando separar instrucciones, contexto(historia) y pregunta del usuario.
+
+- Recuerden usar el system message y user message.
+
+
+
+historia = """En un pequeño feudo medieval, Thomas, un joven campesino de dieciséis años, trabajaba desde el amanecer en los campos de trigo del señor feudal. El sol apenas había salido cuando él ya había arado más de lo que sus manos podían soportar. La vida era dura, pero su familia dependía de la cosecha para pagar los impuestos y mantener su hogar de madera y paja.
+
+Un día, el feudo fue sacudido por noticias de guerra. El rey había llamado a todos los hombres en edad de luchar. Thomas sabía que, al igual que otros jóvenes, no tenía elección. Cambió la hoz por una lanza rudimentaria y se unió a la milicia local. Sin entrenamiento, fue empujado a un campo de batalla embarrado, donde el acero resonaba y los gritos de los hombres llenaban el aire.
+
+La batalla fue un caos. Thomas, con el corazón latiendo en su pecho como un tambor de guerra, apenas podía distinguir amigo de enemigo. Logró esquivar una espada, pero cayó al suelo, cubierto de lodo y sangre. Levantándose, vio cómo un compañero caía junto a él, sus ojos abiertos, vacíos.
+
+Cuando la batalla terminó, el silencio era tan profundo como el vacío que sentía. Thomas regresó al feudo, diferente, marcado por la muerte y la violencia. Su madre lo recibió con lágrimas en los ojos, pero él, con la mirada fija en el horizonte, sabía que la inocencia había quedado atrás, enterrada en aquel campo de batalla. La paz del feudo ya no era la misma; él tampoco."""
+
+
+
+-------------------------
+
+EJERCICIO 3
+
+Crear un chatbot sencillo impulsado por un LLM.
+La aplicacion debe mantenerse viva hasta que el usuario escriba "salir"
+
+Dicho bot esta destinado a un usuario final y debe cumplir las siguientes **condiciones en sus respuestas**:
+
+- Responder en no mas de 70 tokens.
+- Responder de manera positiva, con un tono entusiasta.
+- Responder con consejos útiles, como si fueras un tutor.
+
+ 
+**Otras consideraciones que suman**:
+
+
+Agregar historial de conversaciones para que el bot pueda mantener el hilo de lo que se esta hablando. 
+Para probar no usen mas de 3 conversaciones anidadas para no enviarle tantos tokens.
